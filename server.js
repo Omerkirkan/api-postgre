@@ -10,6 +10,7 @@ app.use(express.json());
 db.connect((err) => {
   if (err) {
     console.log("Error connecting to Db");
+    console.log(err);
     return;
   }
   console.log("Connection established");
@@ -22,21 +23,6 @@ app.get("/getusers", (req, res) => {
     }
     res.json(result.rows);
   });
-});
-
-app.post("/register", (req, res) => {
-  const { email, password } = req.body;
-  db.query(
-    "INSERT INTO users (email, password) VALUES ($1, $2)",
-    [email, password],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      }
-      console.log(result);
-      res.send("Values inserted");
-    }
-  );
 });
 
 app.listen(port, () => {
